@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        #canvas {
+            border: 2px solid #343a40;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <title>Canvas Polygon Drawer</title>
+</head>
+<body>
+    <label for="sidesInput">Enter the number of sides:</label>
+    <input type="number" id="sidesInput" min="3" value="3">
+    <button onclick="drawPolygon()">Draw Polygon</button>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            function drawPolygon() {
+                const sides = parseInt(document.getElementById('sidesInput').value);
+                if (isNaN(sides) || sides < 3) {
+                    alert('Please enter a valid number of sides (minimum 3).');
+                    return;
+                }
+
+                clearCanvas();
+                drawRegularPolygon(sides, 200, 200, 100, '#007bff');
+                addComment(`Draw a polygon with ${sides} sides`);
+            }
+
+            function drawRegularPolygon(sides, x, y, radius, color) {
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const angle = (i * (2 * Math.PI)) / sides;
+                    const posX = x + radius * Math.cos(angle);
+                    const posY = y + radius * Math.sin(angle);
+                    ctx.lineTo(posX, posY);
+                }
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function addComment(comment) {
+                console.log(comment); // You can customize this line to display comments differently
+            }
+        });
+    </script>
+</body>
+</html>
