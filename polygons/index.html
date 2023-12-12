@@ -23,13 +23,17 @@
 <body>
     <label for="sidesInput">Enter the number of sides:</label>
     <input type="number" id="sidesInput" min="3" value="3">
-    <button onclick="drawPolygon()">Draw Polygon</button>
+    <button id="drawButton">Draw Polygon</button>
     <canvas id="canvas" width="400" height="400"></canvas>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
+
+            document.getElementById('drawButton').addEventListener('click', function() {
+                drawPolygon();
+            });
 
             function drawPolygon() {
                 const sides = parseInt(document.getElementById('sidesInput').value);
